@@ -13,11 +13,15 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install Scoop
+        shell: pwsh
+        run: |
+          Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+          irm get.scoop.sh | iex
       - name: Run checkver
         shell: pwsh
         run: |
-          Invoke-WebRequest -Uri https://raw.githubusercontent.com/ScoopInstaller/Scoop/master/bin/checkver.ps1 -OutFile $env:RUNNER_TEMP/checkver.ps1
-          & $env:RUNNER_TEMP/checkver.ps1 -Update -SkipUpdated
+          & "$env:USERPROFILE\scoop\apps\scoop\current\bin\checkver.ps1" findbtc -Dir "$env:GITHUB_WORKSPACE\bucket" -Update -SkipUpdated
       - name: Commit updates
         shell: bash
         run: |
