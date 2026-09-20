@@ -20,10 +20,10 @@
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://github.com/pauljones0/findbtc/releases/download/v$cleanVersion/findbtc_$cleanVersion_windows_amd64.zip"
+                "url": "https://github.com/pauljones0/findbtc/releases/download/v$version/findbtc_$version_windows_amd64.zip"
             },
             "arm64": {
-                "url": "https://github.com/pauljones0/findbtc/releases/download/v$cleanVersion/findbtc_$cleanVersion_windows_arm64.zip"
+                "url": "https://github.com/pauljones0/findbtc/releases/download/v$version/findbtc_$version_windows_arm64.zip"
             }
         }
     }
