@@ -1,0 +1,27 @@
+name: checkver
+
+on:
+  schedule:
+    - cron: '17 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  checkver:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run checkver
+        shell: pwsh
+        run: |
+          Invoke-WebRequest -Uri https://raw.githubusercontent.com/ScoopInstaller/Scoop/master/bin/checkver.ps1 -OutFile $env:RUNNER_TEMP/checkver.ps1
+          & $env:RUNNER_TEMP/checkver.ps1 -Update -SkipUpdated
+      - name: Commit updates
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add bucket/
+          git diff --cached --quiet && echo 'checkver: already current' || { git commit -m 'checkver: bump manifests' && git push; }
